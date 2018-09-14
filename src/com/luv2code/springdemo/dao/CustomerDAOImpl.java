@@ -38,7 +38,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         // save or update the customer
         currentSession.saveOrUpdate(theCustomer);
-
     }
 
     @Override
@@ -49,6 +48,18 @@ public class CustomerDAOImpl implements CustomerDAO {
         Customer theCustomer = currentSession.get(Customer.class, theId);
 
         return theCustomer;
+    }
+
+    @SuppressWarnings("JpaQlInspection")
+    @Override
+    public void deleteCustomer(int theId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        // Query - delete on id
+        Query query = currentSession.createQuery("delete from Customer where id=:CustomerId");
+        query.setParameter("CustomerId", theId);
+
+        query.executeUpdate();
+
     }
 }
 
